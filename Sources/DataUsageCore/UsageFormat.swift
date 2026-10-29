@@ -5,12 +5,16 @@ public enum UsageFormat {
     /// Formats a byte count in decimal units, as carriers count data.
     public static func bytes(_ count: UInt64) -> String {
         let value = Double(count)
+        // Pick the unit from the rounded value so 999,600 bytes reads "1.0 MB", not "1000 KB".
+        let kilobytes = (value / 1e3).rounded()
+        let megabytes = (value / 1e5).rounded() / 10
         switch count {
         case 0: return "0 KB"
         case ..<1_000: return "\(count) bytes"
-        case ..<1_000_000: return "\(Int((value / 1e3).rounded())) KB"
-        case ..<1_000_000_000: return String(format: "%.1f MB", value / 1e6)
-        default: return String(format: "%.2f GB", value / 1e9)
+        default:
+            if kilobytes < 1_000 { return "\(Int(kilobytes)) KB" }
+            if megabytes < 1_000 { return String(format: "%.1f MB", megabytes) }
+            return String(format: "%.2f GB", value / 1e9)
         }
     }
 

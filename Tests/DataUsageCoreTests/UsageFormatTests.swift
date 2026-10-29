@@ -9,6 +9,8 @@ struct UsageFormatTests {
         (12_345, "12 KB"),
         (342_722_908, "342.7 MB"),
         (1_876_491_418, "1.88 GB"),
+        (999_600, "1.0 MB"),
+        (999_960_000, "1.00 GB"),
     ])
     func bytesUseDecimalUnits(bytes: UInt64, expected: String) {
         #expect(UsageFormat.bytes(bytes) == expected)
