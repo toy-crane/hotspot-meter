@@ -1,0 +1,4 @@
+interface:
+  display_name: "Maintain Project Context"
+  short_description: "Reconcile durable context and tracker mirrors"
+  default_prompt: "Use $maintain-project-context to reconcile this project’s durable context and any configured spec-issue mirror without inventing decisions."
