@@ -8,8 +8,9 @@ APP="build/Hotspot Meter.app"
 swift build -c release
 
 rm -rf "$APP"
-mkdir -p "$APP/Contents/MacOS"
+mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 cp .build/release/HotspotMeter "$APP/Contents/MacOS/HotspotMeter"
+cp Resources/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
 
 cat > "$APP/Contents/Info.plist" <<'PLIST'
 <?xml version="1.0" encoding="UTF-8"?>
@@ -24,6 +25,8 @@ cat > "$APP/Contents/Info.plist" <<'PLIST'
     <string>Hotspot Meter</string>
     <key>CFBundleDisplayName</key>
     <string>Hotspot Meter</string>
+    <key>CFBundleIconFile</key>
+    <string>AppIcon</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
