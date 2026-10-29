@@ -30,12 +30,7 @@ DMG="build/HotspotMeter-$VERSION.dmg"
 codesign --force --options runtime --timestamp --sign "$IDENTITY" "$APP"
 codesign --verify --strict --verbose=2 "$APP"
 
-STAGING=$(mktemp -d)
-trap 'rm -rf "$STAGING"' EXIT
-cp -R "$APP" "$STAGING/"
-ln -s /Applications "$STAGING/Applications"
-rm -f "$DMG"
-hdiutil create -volname "Hotspot Meter" -srcfolder "$STAGING" -format UDZO "$DMG"
+scripts/make-dmg.sh "$APP" "$DMG"
 codesign --force --timestamp --sign "$IDENTITY" "$DMG"
 
 xcrun notarytool submit "$DMG" --keychain-profile "$PROFILE" --wait
