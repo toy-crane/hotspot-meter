@@ -14,7 +14,6 @@ struct UsagePanel: View {
             Text(UsageFormat.since(since))
                 .font(.system(size: 12))
                 .foregroundStyle(.secondary)
-                .help(UsageFormat.sinceDetail(since))
             HStack(alignment: .center) {
                 Text(UsageFormat.bytes(total))
                     .font(.system(size: 30, weight: .bold))

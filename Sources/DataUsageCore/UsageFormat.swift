@@ -18,20 +18,11 @@ public enum UsageFormat {
         }
     }
 
-    /// The start date shown above the total, such as "10월 27일부터".
+    /// The start time shown above the total, such as "10월 27일 오후 9:14부터".
     public static func since(_ date: Date) -> String {
-        formatter("M월 d일").string(from: date) + "부터"
-    }
-
-    /// The start date and time shown on hover, such as "10월 27일 오후 9:14".
-    public static func sinceDetail(_ date: Date) -> String {
-        formatter("M월 d일 a h:mm").string(from: date)
-    }
-
-    private static func formatter(_ format: String) -> DateFormatter {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_KR")
-        formatter.dateFormat = format
-        return formatter
+        formatter.dateFormat = "M월 d일 a h:mm"
+        return formatter.string(from: date) + "부터"
     }
 }
