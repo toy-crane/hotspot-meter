@@ -5,36 +5,27 @@ import Observation
 @MainActor
 @Observable
 final class UsageModel {
-    /// Interface carrying the hotspot connection, such as `en8` for iPhone USB.
-    private(set) var hotspotInterface: String?
-    /// Usage since the current hotspot connection started.
-    private(set) var session = ByteCounts.zero
-    /// Usage on hotspot connections since the last manual reset.
-    private(set) var total: ByteCounts
-    private(set) var totalSince: Date
+    /// Whether a hotspot connection is up and being counted.
+    private(set) var isCounting = false
+    /// Hotspot usage since the last reset.
+    private(set) var total: UInt64
+    private(set) var since: Date
 
+    private var hotspotInterface: String?
+    private var ledger: UsageLedger
     private var tracker = UsageTracker()
     private let monitor = HotspotMonitor()
-    private let defaults: UserDefaults
     private var pollTask: Task<Void, Never>?
 
-    private enum Key {
-        static let received = "total.received"
-        static let sent = "total.sent"
-        static let since = "total.since"
-    }
-
     init(defaults: UserDefaults = .standard) {
-        self.defaults = defaults
-        total = ByteCounts(
-            received: UInt64(defaults.integer(forKey: Key.received)),
-            sent: UInt64(defaults.integer(forKey: Key.sent))
-        )
-        totalSince = defaults.object(forKey: Key.since) as? Date ?? .now
-        defaults.set(totalSince, forKey: Key.since)
+        let ledger = UsageLedger(defaults: defaults)
+        self.ledger = ledger
+        total = ledger.total
+        since = ledger.since
     }
 
     func start() {
+        guard pollTask == nil else { return }
         monitor.start { [weak self] name in
             self?.hotspotChanged(to: name)
         }
@@ -46,19 +37,17 @@ final class UsageModel {
         }
     }
 
-    func resetTotal() {
-        total = .zero
-        totalSince = .now
-        save()
+    func reset() {
+        ledger.reset()
+        tracker.reset()
+        sync()
     }
 
     private func hotspotChanged(to name: String?) {
         guard name != hotspotInterface else { return }
         hotspotInterface = name
+        isCounting = name != nil
         tracker.reset()
-        if name != nil {
-            session = .zero
-        }
         sample()
     }
 
@@ -67,14 +56,12 @@ final class UsageModel {
               let counters = InterfaceCounters.read(interface: name) else { return }
         let delta = tracker.record(interface: name, counters: counters)
         guard delta.total > 0 else { return }
-        session += delta
-        total += delta
-        save()
+        ledger.add(delta)
+        sync()
     }
 
-    private func save() {
-        defaults.set(Int(clamping: total.received), forKey: Key.received)
-        defaults.set(Int(clamping: total.sent), forKey: Key.sent)
-        defaults.set(totalSince, forKey: Key.since)
+    private func sync() {
+        total = ledger.total
+        since = ledger.since
     }
 }
