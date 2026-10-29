@@ -24,27 +24,25 @@ func drawIcon(in context: CGContext) {
     let gradient = CGGradient(
         colorsSpace: CGColorSpaceCreateDeviceRGB(),
         colors: [
-            NSColor(srgbRed: 0.29, green: 0.64, blue: 1.0, alpha: 1).cgColor,
-            NSColor(srgbRed: 0.04, green: 0.42, blue: 1.0, alpha: 1).cgColor,
+            NSColor(srgbRed: 58 / 255, green: 58 / 255, blue: 62 / 255, alpha: 1).cgColor,
+            NSColor(srgbRed: 28 / 255, green: 28 / 255, blue: 30 / 255, alpha: 1).cgColor,
         ] as CFArray,
         locations: [0, 1]
     )!
     context.drawLinearGradient(gradient, start: CGPoint(x: 0, y: tile.maxY), end: CGPoint(x: 0, y: tile.minY), options: [])
     context.restoreGState()
 
-    // Two interlocking chain links, tilted 45 degrees.
-    context.saveGState()
-    context.translateBy(x: canvas / 2, y: canvas / 2)
-    context.rotate(by: .pi / 4)
+    // Two signal waves over a green dot, matching the panel's 집계 중 color.
+    let source = CGPoint(x: canvas / 2, y: 340)
+    context.setFillColor(NSColor(srgbRed: 48 / 255, green: 209 / 255, blue: 88 / 255, alpha: 1).cgColor)
+    context.fillEllipse(in: CGRect(x: source.x - 56, y: source.y - 56, width: 112, height: 112))
     context.setStrokeColor(NSColor.white.cgColor)
-    context.setLineWidth(54)
-    let link = CGSize(width: 300, height: 170)
-    for offset: CGFloat in [-112, 112] {
-        let rect = CGRect(x: offset - link.width / 2, y: -link.height / 2, width: link.width, height: link.height)
-        context.addPath(CGPath(roundedRect: rect, cornerWidth: link.height / 2, cornerHeight: link.height / 2, transform: nil))
+    context.setLineCap(.round)
+    context.setLineWidth(66)
+    for radius: CGFloat in [190, 330] {
+        context.addArc(center: source, radius: radius, startAngle: .pi * 0.25, endAngle: .pi * 0.75, clockwise: false)
         context.strokePath()
     }
-    context.restoreGState()
 }
 
 func png(size: Int) -> Data {
