@@ -47,6 +47,7 @@ public enum InterfaceCounters {
     private static func interfaceName(index: UInt16) -> String? {
         var name = [CChar](repeating: 0, count: Int(IF_NAMESIZE))
         guard if_indextoname(UInt32(index), &name) != nil else { return nil }
-        return String(cString: name)
+        let bytes = name.prefix { $0 != 0 }.map { UInt8(bitPattern: $0) }
+        return String(decoding: bytes, as: UTF8.self)
     }
 }
