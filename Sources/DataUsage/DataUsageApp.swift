@@ -28,5 +28,7 @@ struct DataUsageApp: App {
 }
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    func applicationDidFinishLaunching(_ notification: Notification) {}
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        LaunchAtLogin.registerOnce()
+    }
 }
