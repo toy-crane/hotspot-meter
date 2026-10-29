@@ -420,8 +420,7 @@
     status.className = 'status ' + (on ? 'on' : 'off');
     status.textContent = on ? '집계 중' : '핫스팟 아님';
     $('u-total').querySelector('.value').textContent = fmt(app.total.r + app.total.s);
-    $('since').textContent = `${fmtDate(app.since)}부터`;
-    $('since').title = fmtDateTime(app.since);
+    $('since').textContent = `${fmtDateTime(app.since)}부터`;
 
     if (!panel.hidden) {
       const d = desktop.getBoundingClientRect(), r = appItem.getBoundingClientRect();
