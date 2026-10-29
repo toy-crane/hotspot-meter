@@ -1,4 +1,4 @@
-import DataUsageCore
+import HotspotMeterCore
 import SwiftUI
 
 /// The window that opens from the menu bar item.

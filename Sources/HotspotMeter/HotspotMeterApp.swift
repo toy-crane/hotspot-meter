@@ -2,7 +2,7 @@ import AppKit
 import SwiftUI
 
 @main
-struct DataUsageApp: App {
+struct HotspotMeterApp: App {
     @NSApplicationDelegateAdaptor private var appDelegate: AppDelegate
     @State private var model = UsageModel()
 

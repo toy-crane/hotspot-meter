@@ -4,12 +4,12 @@ set -eu
 
 cd "$(dirname "$0")/.."
 
-APP=build/DataUsage.app
+APP="build/Hotspot Meter.app"
 swift build -c release
 
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS"
-cp .build/release/DataUsage "$APP/Contents/MacOS/DataUsage"
+cp .build/release/HotspotMeter "$APP/Contents/MacOS/HotspotMeter"
 
 cat > "$APP/Contents/Info.plist" <<'PLIST'
 <?xml version="1.0" encoding="UTF-8"?>
@@ -17,11 +17,13 @@ cat > "$APP/Contents/Info.plist" <<'PLIST'
 <plist version="1.0">
 <dict>
     <key>CFBundleExecutable</key>
-    <string>DataUsage</string>
+    <string>HotspotMeter</string>
     <key>CFBundleIdentifier</key>
-    <string>com.toycrane.DataUsage</string>
+    <string>com.odd.hotspotmeter</string>
     <key>CFBundleName</key>
-    <string>DataUsage</string>
+    <string>Hotspot Meter</string>
+    <key>CFBundleDisplayName</key>
+    <string>Hotspot Meter</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>

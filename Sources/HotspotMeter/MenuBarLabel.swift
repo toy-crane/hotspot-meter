@@ -1,5 +1,5 @@
 import AppKit
-import DataUsageCore
+import HotspotMeterCore
 import SwiftUI
 
 /// Draws the menu bar item as a template image.

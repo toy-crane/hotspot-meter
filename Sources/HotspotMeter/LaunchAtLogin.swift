@@ -8,7 +8,7 @@ import ServiceManagement
 /// login item off in System Settings, the app respects that choice.
 enum LaunchAtLogin {
     private static let registeredKey = "launchAtLogin.registered"
-    private static let logger = Logger(subsystem: "com.toycrane.DataUsage", category: "LaunchAtLogin")
+    private static let logger = Logger(subsystem: "com.odd.hotspotmeter", category: "LaunchAtLogin")
 
     static func registerOnce(defaults: UserDefaults = .standard) {
         guard Bundle.main.bundleURL.pathExtension == "app",

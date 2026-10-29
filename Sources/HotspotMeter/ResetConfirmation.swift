@@ -1,5 +1,5 @@
 import AppKit
-import DataUsageCore
+import HotspotMeterCore
 
 /// Asks before clearing the total, with Cancel as the default for Return and Escape.
 @MainActor

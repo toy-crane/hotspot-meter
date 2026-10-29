@@ -1,5 +1,5 @@
 import Testing
-@testable import DataUsageCore
+@testable import HotspotMeterCore
 
 struct UsageTrackerTests {
     @Test func firstSampleOnlySetsBaseline() {

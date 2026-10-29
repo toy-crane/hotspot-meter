@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import DataUsageCore
+@testable import HotspotMeterCore
 
 struct UsageLedgerTests {
     private let defaults: UserDefaults

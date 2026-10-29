@@ -2,7 +2,7 @@
 import AppKit
 import SwiftUI
 
-/// Debug-only runtime check: `DataUsage --self-check <dir>`.
+/// Debug-only runtime check: `HotspotMeter --self-check <dir>`.
 ///
 /// Renders the app's own windows to PNG and drives the reset confirmation
 /// with synthetic key presses, since the app can capture its own views

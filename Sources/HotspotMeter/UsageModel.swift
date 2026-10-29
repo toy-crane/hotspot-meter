@@ -1,4 +1,4 @@
-import DataUsageCore
+import HotspotMeterCore
 import Foundation
 import Observation
 

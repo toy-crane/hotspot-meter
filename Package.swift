@@ -2,17 +2,17 @@
 import PackageDescription
 
 let package = Package(
-    name: "DataUsage",
+    name: "HotspotMeter",
     platforms: [.macOS(.v15)],
     targets: [
-        .target(name: "DataUsageCore"),
+        .target(name: "HotspotMeterCore"),
         .executableTarget(
-            name: "DataUsage",
-            dependencies: ["DataUsageCore"]
+            name: "HotspotMeter",
+            dependencies: ["HotspotMeterCore"]
         ),
         .testTarget(
-            name: "DataUsageCoreTests",
-            dependencies: ["DataUsageCore"]
+            name: "HotspotMeterCoreTests",
+            dependencies: ["HotspotMeterCore"]
         ),
     ]
 )
